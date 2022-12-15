@@ -1,0 +1,37 @@
+<div class="card-body">
+  <h5 class="card-title" appHighlight ="'red'">{{ product.name }}</h5>
+  <p class="card-text">{{ product.quantityPerUnit }} </p>
+  <p class="card-text" [appHighlight] = "'yellow'">{{ product.unitPrice | currency:"₺" : "code"}} </p>
+  <button (click)="addToCartClick" class="btn" [appButton]="'btn-primary'">Add to Cart</button>
+</div>
+
+
+<div *ngIfNot="true"><p>Visible paragraph</p></div>
+<div *ngIfNot="false"><p>Unvisible paragraph</p></div>
+
+<hr>
+
+<input id="showInput" type="checkbox" [(ngModel)]="showInput" />
+<label for="showInput">Show conditional header</label>
+<h2 *ngIfNot="showInput">My conditional header</h2>
+
+<hr>
+
+<p *appUnless="condition" class="unless a">
+  (A) This paragraph is displayed because the condition is false.
+</p>
+
+<p *appUnless="!condition" class="unless b">
+  (B) Although the condition is true,
+  this paragraph is displayed because appUnless is set to false.
+</p>
+
+<p>
+  The condition is currently
+  <span >{{condition}}</span>.
+  <button
+    type="button"
+    (click)="condition = !condition">
+    Toggle condition to {{condition ? 'false' : 'true'}}
+  </button>
+</p>

@@ -1,0 +1,40 @@
+<div class="container">
+<h1 class="display-6">Category Form</h1>
+<!--# Reactive Form -->
+<form [formGroup]="categoryForm" (submit)="onCategoryFormSubmit()"  class="mb-5">
+   
+    
+    <div class="mb-3">
+        <label for="descriptionInput" class="form-label">description</label>
+        <input
+          formControlName="descriptionId"
+          type="text"
+          id="descriptionInput"
+          class="form-control"
+          placeholder="Enter description id"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="nameInput" class="form-label">name</label>
+        <input
+          formControlName="nameId"
+          type="text"
+          id="nameInput"
+          class="form-control"
+          placeholder="Enter name id"
+        />
+      </div>
+      <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary w-25">Save</button>
+        <button
+          *ngIf="isEditting"
+          (click)="onDeleteCategory()"
+          type="button"
+          class="btn btn-danger w-25"
+        >
+         Delete
+        </button>
+      </div>
+      </form>
+    </div>

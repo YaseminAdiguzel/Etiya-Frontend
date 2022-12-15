@@ -1,0 +1,125 @@
+<h1 class="display-6">Product Form</h1>
+
+<!--# Reactive Form -->
+<form [formGroup]="productForm" (submit)="onProductFormSubmit()">
+  <div class="mb-3">
+    <label for="nameInput" class="form-label">Name</label>
+    <input
+      formControlName="name"
+      type="text"
+      id="nameInput"
+      class="form-control"
+      placeholder="Enter product name"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="categoryInput" class="form-label">Category</label>
+    <select class="form-select" formControlName="categoryId" id="categoryInput">
+      <option disabled value="0">Seçiniz</option>
+      <!-- Display Name - Shown Name -->
+      <!-- Kategorileri al, option'da iterate et ve valuesına idsini, display nameine nameini yazdır -->
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </option>
+    </select>
+    </div>
+
+  <div class="mb-3">
+  
+    <label for="supplierInput" class="form-label">Supplier</label>
+    <select class="form-select" formControlName="supplierId" id="supplierInput">
+      <option disabled value="0">Seçiniz</option>
+      <!-- Display Name - Shown Name -->
+      <!-- Kategorileri al, option'da iterate et ve valuesına idsini, display nameine nameini yazdır -->
+      <option *ngFor="let supplier of suppliers" [value]="supplier.id">
+        {{ supplier.companyName}}
+      </option>
+    </select>
+  </div>
+
+  <!--TODO: Select Menu ile category'leri opsiyonlar olarak listlemek ve seçtiği category'in id'sini kaydetmek -->
+
+  <div class="mb-3">
+    <label for="quantityPerUnitInput" class="form-label"
+      >Quantity Per Unit</label
+    >
+    <input
+      formControlName="quantityPerUnit"
+      type="text"
+      id="quantityPerUnitInput"
+      class="form-control"
+      placeholder="Enter quantity per unit"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="unitPriceInput" class="form-label">Unit Price</label>
+    <input
+      formControlName="unitPrice"
+      type="number"
+      id="unitPriceInput"
+      class="form-control"
+      placeholder="Enter unit price"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="unitsInStockInput" class="form-label">Units In Stock</label>
+    <input
+      formControlName="unitsInStock"
+      type="number"
+      id="unitsInStockInput"
+      class="form-control"
+      placeholder="Enter units in stock"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="unitsOnOrderInput" class="form-label">Units On Order</label>
+    <input
+      formControlName="unitsOnOrder"
+      type="number"
+      id="unitsOnOrderInput"
+      class="form-control"
+      placeholder="Enter units on order"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="reorderLevelInput" class="form-label">Reorder Level</label>
+    <input
+      formControlName="reorderLevel"
+      type="number"
+      id="reorderLevelInput"
+      class="form-control"
+      placeholder="Enter reorder level"
+    />
+  </div>
+
+  <div class="mb-3 form-check">
+    <input
+      formControlName="discontinued"
+      type="checkbox"
+      id="discontinuedInput"
+      class="form-check-input"
+    />
+    <label class="form-check-label" for="discontinuedInput">
+      Discontinued
+    </label>
+  </div>
+  <div class="d-flex justify-content-between">
+    <button type="submit" class="btn btn-primary w-25">Save</button>
+    <button
+      *ngIf="isEditting"
+      (click)="onDeleteProduct()"
+      type="button"
+      class="btn btn-danger w-25"
+    >
+      Delete
+    </button>
+  </div>
+  
+  </form>
+
+

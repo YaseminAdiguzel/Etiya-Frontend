@@ -1,0 +1,99 @@
+<div class="d-flex">
+  <h1 class="display-6">Product List</h1>
+  <div class="ms-3 d-flex align-items-center">
+    <!--# One Way binding (tek yönlü atama) -->
+    <!--# Two Way Binding (en temel, klasik): event gerekir ve value değerini dinamik geçmek gerekir. -->
+    <!--# Two Way Binding: [(ngModel)] ile input değerini bir state ile, iki yönlü olarak birbirine bağlayabiliriz -->
+    <input
+      type="text"
+      class="form-control"
+      id="searchProductNameInput"
+      placeholder="Search..."
+      (change)="onSearchProductNameChange($event)"
+      [(ngModel)]="searchProductNameInput"
+    />
+    <!-- [value]="searchProductNameInput" -->
+    <!--: $event ilgili event'in özelliklerinin bulunduğu html tarafından geçilen js objesi angular tarafından geçilecektir. -->
+  </div>
+</div>
+
+<ng-template #loadingSpinner>
+  <div class="d-flex justify-content-center align-items-center h-100">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</ng-template>
+
+<!-- Boolean(isLoading) -->
+<div *ngIf="!!isLoading === false; else loadingSpinner" class="row">
+  <ng-container *ngIf="errorAlertMessage; else productsList">
+    <div
+      class="alert alert-danger"
+      role="alert"
+      [innerText]="errorAlertMessage"
+    >
+      <!-- {{ errorAlertMessage || "null" }} -->
+    </div>
+  </ng-container>
+  <!--* unordered list -->
+  <!--# Built-in Directive -->
+
+  <!--# *ngFor is a built-in structural directive -->
+  <!-- <div *ngFor="let product of products"> -->
+
+  <!--# Attribute directive -->
+  <ng-template #productsList>
+    <ng-container *ngIf="products.length === 0; else showProductList">
+      <div class="alert alert-info" role="alert">
+        There is no product with filters.
+      </div>
+    </ng-container>
+
+    <ng-template #showProductList>
+      <ng-template ngFor let-product [ngForOf]="products">
+        <!-- Sanal, html tarafında render'lanmayan veya bir etikete karşılık gelmeyen bir etiket olacak. -->
+
+        <!--# *ngIf -->
+        <div
+          *ngIf="isProductCardShow(product); else productDiscontinued"
+          [class]="productCardClass"
+        >
+         <app-product-card [product]="product"> </app-product-card>
+        </div>
+        <!--* list istem -->
+
+        <ng-template #productDiscontinued>
+          <div
+            class="{{
+              productCardClass
+            }} d-flex justify-content-center align-items-center"
+          >
+            <p>{{ product.name }} ürünü şuan satılmıyor.</p>
+          </div>
+        </ng-template>
+      </ng-template>
+    </ng-template>
+  </ng-template>
+
+  <!-- </div> -->
+</div>
+
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [ngClass]="{ disabled: pagination.page == 1 }">
+      <button (click)="changePage(pagination.page - 1)" class="page-link">
+        Previous
+      </button>
+    </li>
+    <li class="page-item">
+      <button class="page-link">{{ pagination.page }}</button>
+    </li>
+    <li
+      class="page-item"
+      [ngClass]="{ disabled: pagination.page === lastPage }"
+    >
+      <button (click)="changePage(pagination.page + 1)" class="page-link">
+        Next
+      </button>
+    </li>
+  </ul>
+</nav>
